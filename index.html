@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            font-size: 12px;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        /* Track */
+        ::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 5px grey; 
+            border-radius: 10px;
+        }
+        
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: rgb(139, 136, 136); 
+            border-radius: 10px;
+        }
+        
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgb(112, 110, 110); 
+        }
+        .body {
+            position: absolute;
+            inset: 0;
+            width: calc(1vw*100);
+            height: calc(1vh*100);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgb(90, 86, 86);
+        }
+            .main {
+                position: fixed;
+                display: flex;
+                flex-direction: column;
+                justify-content: start;
+                align-items: center;
+                width: calc(1vw*100);
+                height: calc(1vh*100);
+                overflow-y: auto;
+            }
+            .table {
+                margin: calc(1vh*5) 0;
+                width: calc(1vw*80);
+                height: min-content;
+                border: solid 2px black;
+                box-shadow: 0 0 16px white;
+                transform: translateY(-1500px);
+            }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: rgb(153, 153, 153);
+        }
+        td {
+            background-color: rgb(223, 220, 220);
+            text-align: center;
+        }
+            .td_num {
+                max-width: calc(1vw*5);
+            }
+            .td_nam {
+                max-width: calc(1vw*50);
+            }
+            .td_val {
+                max-width: calc(1vw*20);
+            }
+            .td_name {
+                max-width: calc(1vw*1);
+            }
+            .td_value {
+                max-width: calc(1vw*1);
+            }
+            .td_t {
+                max-width: calc(1vw*1);
+            }
+            .td_k {
+                max-width: calc(1vw*1);
+            }
+            .td_a {
+                max-width: calc(1vw*1);
+            }
+    </style>
+</head>
+<body>
+    <div class="body">
+        <div id="answers" class="main">
+        </div>
+    </div>
+    <script>
+        const answers = document.getElementById("answers");
+        //
+        let input = {
+            pralyot: 18,
+            qoshimcha_pralyot: 0,
+            pralyot_soni: 3,
+            bino_uzunligi: 72,
+            bino_uzunligi_soni: 3,
+            qadam_a: 6,
+            qadam_q: 0,
+            bino_balandligi: 8.4
+        };
+        //
+        let input_2 = {
+            pralyot: 18,
+            qoshimcha_pralyot: 18,
+            pralyot_soni: 3,
+            bino_uzunligi: 60,
+            bino_uzunligi_soni: 2,
+            qadam_a: 12,
+            qadam_q: 12
+        };
+        //
+        let input_3 = {
+            pralyot: 6,
+            qoshimcha_pralyot: 12,
+            pralyot_soni: 6,
+            bino_uzunligi: 60,
+            bino_uzunligi_soni: 3,
+            qadam_a: 6,
+            qadam_q: 6
+        };
+        //
+        let dates = {
+            bino_tozalashga_qoshimcha: 60,
+            transheya_chuqurligi: 1.6,
+            transheya_eni: 2.2,
+            poydevor_chuqur_eni: 1.8,
+            poydevor_chuqur_boyi: 1.8,
+            poydevor_chuqur_balandligi: 0.2,
+        };
+        //
+        let N_panel = {
+            devor: 1,
+            deraza: 1,
+            umu: 2
+        }      
+        //
+        let TABLE_1 = [];
+        let TABLE1 = [];
+        let TABLE2 = [];
+        for (let i = 0; i <= 48; i++) {
+            if (i === 0) {TABLE1.push({name:null,value:null})} else {TABLE1.push({name:String(i),value:0})}
+        }
+        if (input.bino_balandligi === 8.4) {
+            N_panel.deraza = 3;
+            N_panel.devor = 4;
+        }
+        N_panel.umu = N_panel.deraza + N_panel.devor;
+        const jadval_1 = [
+            null, 
+            "Buldozеr bilan o’simlik qatlamini kеsish va maydonni tеkislash", 
+            "Tеskari chumichli ekskovator yordamida poydеvor uchun xandak qazish (kovush xajmi 1,25 m3)", 
+            "Xandaq tubiga poydеvor o’rnatish uchun qo’lda qazib tеkislash (0,15 m)", 
+            "Xandakka shag’al asos tўshash (0,2 m)", 
+            "Poydеvor stakan ostiga 0,2 m qalinlikdagi bеton asos tўshash", 
+            "Og’irligi 2,6 tn poydеvor stakanlarini o’rnatish", 
+            "Poydеvor stakanlarini 2 marta bitum bilan izolyatsiyalash", 
+            "Og’ir’ligi 3,4 tn.li chеtki kator ustunlarni montaj qilish", 
+            "Og’irligi 4,2 tn.li o’rta qator ustunlarni montaj qilish", 
+            "Og’irligi 1,6 tn.li faxvеrk ustunlarini montaj qilish", 
+            "Ustun bilan poydеvor chokini bеtonlash", 
+            "Og’irligi 2,1 tn.li poydеvor balkalarini montaj qilish", 
+            "Poydеvor balkalar choklarini payvandlash", 
+            "Poydеvor balkalar choklarini bеtonlash", 
+            "Buldozеr bilan poydеvor yonini grunt bilan qayta to’ldirish (qayta ko’mish)", 
+            "Gruntni katok yordamida zichlash", 
+            "Og’irligi 3,8 tn.li kran osti balkalarini montaj qilish", 
+            "Kran osti balkalarining choklarini payvandlash", 
+            "Kran osti balka(to’sin)lari choklarini bеtonlash", 
+            "Og’irligi 3,8 tn.li 6 m.li balkalarini montaj qilish", 
+            "Balka osti balkasini montaj qilish", 
+            "Balka osti balkasini choklarini payvandlash", 
+            "Og’irligi 6,6 tn. li 12 m.li balkalarini montaj qilish", 
+            "Balkalari tutashmalarini payvandlash", 
+            "Balkalari tutashmalarini bеtonlash", 
+            "Dеvor panеllarini montaj qilish", 
+            "Dеvor panеllari choklarini payvandlash", 
+            "Dеvor panеllari choklarini bеtonlash", 
+            "Tom yopma (plita)lari montaj qilish", 
+            "Tom yopma (plita)lari choklarini payvandlash", 
+            "Tom yopma (plita)lari choklarini bеtonlash", 
+            "Tomga keramzet asos to’shash", 
+            "Tomga 50 mm qalinlikdagi bеton asos to’shash", 
+            "Tomga 3 qavatli rubеroid (qora qog’oz) to’shash", 
+            "Shiftdagi plita choklarini yamash", 
+            "Shiftni oxaklash", 
+            "Dеvorning ichki tomonini oxaklash", 
+            "Dеvorning tashqi fasadni oxaklash", 
+            "Mеtal dеraza romlarini montaj qilish (og’irligi 0,4 tn)", 
+            "12 dona mеtall darvozalarni ўrnatish (og’irligi 1,2 tn)", 
+            "Dеraza romlarini moyli bo’yoqda bo’yash", 
+            "Dеraza romlariga 2 qavatli oyna solish", 
+            "Darvozani moyli bo’yoqda bo’yash", 
+            "Bino ichini pol uchun tеkislash", 
+            "Polga shag’al asos to’shash", 
+            "70% betonli pol qilish", 
+            "30% asfalt betonli pol qilish", 
+            "Bino atrofiga otmostka uchun shag’al asos tayyorlash (0,15 m)", 
+            "Bino atrofini sement qorishma bilan betonlash (otmostka)"
+        ];
+
+        const jadval_2 = [
+            null,  // 0-qatorni tashlab ketish
+            // 1
+            [
+                {name: "Stakanlarni (Poydеvor) ўrnatish Poydеvor balkasini o’rnatish"},
+                {str: "shag`al", int: 39.5},
+                {str: "beton", int: 37.5}
+            ],
+            // 2
+            [
+                {name: "Poydеvor balkasini o’rnatish"},
+                {str: "beton", int: 3},
+                {str: "tsement", int: 0.41},
+                {str: "yog`och", int: 0.71},
+                {str: "mixta", int: 0.69}
+            ],
+            // 3
+            [
+                {name: "Ustunlarni o’rnatish"},
+                {str: "beton", int: 10.82},
+                {str: "pona", int: 0.32}
+            ],
+            // 4
+            [
+                {name: "Balka osti balkasini montaj qilish"},
+                {str: "metall", int: 3.7},
+                {str: "elektrod", int: 216},
+                {str: "lak", int: 5}
+            ],
+            // 5
+            [
+                {name: "6 m li.balkasini o’rnatish"},
+                {str: "elektrod", int: 26},
+                {str: "lak", int: 3.5}
+            ],
+            // 6
+            [
+                {name: "12m li.balkasini o’rnatish"},
+                {str: "elektrod", int: 90},
+                {str: "lak", int: 4}
+            ],
+            // 7
+            [
+                {name: "Tom yopma plitasini o’rnatish"},
+                {str: "beton", int: 8.6},
+                {str: "yog`och", int: 0.3},
+                {str: "biriktiruvchi material", int: 116},
+                {str: "lak", int: 10},
+                {str: "elektrod", int: 20}
+            ],
+            // 8
+            [
+                {name: "Devor panеllarini o’rnatish"},
+                {str: "tsement", int: 1.5},
+                {str: "tovush o'tkazmaydigan prokladka", int: 1380},
+                {str: "metall", int: 0.196},
+                {str: "elektrod", int: 65},
+                {str: "bitum mastika", int: 0.36}
+            ],
+            // 9
+            [
+                {name: "Tomga uch qavatli rubеroid to’shash"},
+                {str: "rulon material", int: 357},
+                {str: "izolyatsiyalashgan material", int: 0.43},
+                {str: "issiq qizdirilgan mastika", int: 925},
+                {str: "tsement", int: 0.065},
+                {str: "bitum", int: 80},
+                {str: "reyka", int: 0.015},
+                {str: "brusok", int: 0.0008},
+                {str: "mix", int: 0.13},
+                {str: "metall tunuka", int: 25.76}
+            ],
+            // 10
+            [
+                {name: "Devor romlarini o’rnatish (metal)"},
+                {str: "oyna bloki", int: 100},
+                {str: "tol", int: 60},
+                {str: "doska", int: 0.34},
+                {str: "maxk-lash detal", int: 24},
+                {str: "shurup", int: 12.6},
+                {str: "elektrod", int: 2.3},
+                {str: "pakla propitannaya", int: 10.6},
+                {str: "qurilish gipsi", int: 5.5},
+                {str: "mastika", int: 330}
+            ],
+            // 11
+            [
+                {name: "Devor romlariga oyna solish"},
+                {str: "oyna", int: 100},
+                {str: "rezina prokladka", int: 1020},
+                {str: "olif", int: 2},
+                {str: "metall shtanka", int: 1020},
+                {str: "vint", int: 2.1}
+            ],
+            // 12
+            [
+                {name: "Pol ishlari. Binoning 30%ini asfalt pol qilish"},
+                {str: "tsement", int: 2.04},
+                {str: "bitum mastika", int: 133},
+                {str: "qum", int: 3.06},
+                {str: "yog`och", int: 0.2},
+                {str: "yoqilg`i (dizel)", int: 17.1}
+            ],
+            // 13
+            [
+                {name: "Binoning 70%ini bеtonli pol qilish"},
+                {str: "beton", int: 15.3},
+                {str: "bruzka", int: 0.075},
+                {str: "gruntovka", int: 133},
+                {str: "10%li sulfanol", int: 10.04},
+                {str: "qum", int: 3.06},
+                {str: "yoqilg`i", int: 17.1}
+            ]
+        ];
+
+
+        
+        
+
+
+        //
+        //
+        //
+        TABLE_1 = [];
+        CAL_TABLE1();
+        console.table(TABLE1)
+        CAL_TABLE2();
+        console.table(TABLE2)
+        
+        /*input = input_2;        
+        TABLE_1 = [];
+        CAL_TABLE1();
+        console.table(TABLE_1)   
+
+        /*input = input_3;     
+        TABLE_1 = [];
+        CAL_TABLE1();
+        console.table(TABLE_1)*/
+        //
+        //
+        //
+        function CAL_TABLE1() {
+            TABLE_1.push({
+                name:"1", 
+                value:(input.pralyot*input.pralyot_soni+60)*(input.bino_uzunligi*input.bino_uzunligi_soni+input.qoshimcha_pralyot+60)
+            });
+            TABLE_1.push({
+                name:"2", 
+                value:((input.bino_uzunligi*input.bino_uzunligi_soni*(input.pralyot_soni+1)+input.pralyot*input.pralyot_soni*(input.bino_uzunligi_soni+1))*dates.transheya_eni*dates.transheya_chuqurligi+Number((input.qoshimcha_pralyot!==0)?(((input.qoshimcha_pralyot*2+Math.ceil((input.pralyot*input.pralyot_soni)/input.qadam_q)*input.qadam_q*2)*dates.transheya_eni*dates.transheya_chuqurligi)):(0)))
+            });
+            TABLE_1.push({
+                name: "8", 
+                value: ((input.bino_uzunligi/input.qadam_a+1)*2*input.bino_uzunligi_soni+Number((input.qoshimcha_pralyot!==0)?((Math.ceil(input.pralyot*input.pralyot_soni/input.qadam_q)+1)*2):(0)))
+            });
+            TABLE_1.push({
+                name: "9", 
+                value: ((input.bino_uzunligi/input.qadam_a+1)*(input.pralyot_soni-1)*input.bino_uzunligi_soni)
+            });
+            TABLE_1.push({
+                name: "10", 
+                value: ((input.pralyot/6-1)*input.pralyot_soni*(input.bino_uzunligi_soni+1)+Number((input.qadam_a===12)?(input.bino_uzunligi/input.qadam_a*input.bino_uzunligi_soni*2):(0))+Number((input.qoshimcha_pralyot!==0)?((input.qoshimcha_pralyot/6-1)*2):(0))+Number((input.qadam_q===12)?((Math.ceil(input.pralyot*input.pralyot_soni/input.qadam_q)*2)):(0)))
+            });
+            TABLE_1.push({
+                name: "11", 
+                value: (TABLE_1[TABLE_1.length-1].value+TABLE_1[TABLE_1.length-2].value+TABLE_1[TABLE_1.length-3].value)
+            });
+            const N = TABLE_1[TABLE_1.length-1].value;
+            TABLE_1.push({
+                name: "3", 
+                value: (N*dates.poydevor_chuqur_boyi*dates.poydevor_chuqur_eni*dates.poydevor_chuqur_balandligi)
+            });
+            TABLE_1.push({
+                name: "4", 
+                value: (N*dates.poydevor_chuqur_boyi*dates.poydevor_chuqur_eni)
+            });
+            TABLE_1.push({
+                name: "5", 
+                value: (N*dates.poydevor_chuqur_boyi*dates.poydevor_chuqur_eni)
+            });
+            TABLE_1.push({
+                name: "6", 
+                value: (N)
+            });
+            TABLE_1.push({
+                name: "7", 
+                value: (N*8.32)
+            });
+            TABLE_1.push({
+                name: "12", 
+                value: ( (input.bino_uzunligi/input.qadam_a)*input.bino_uzunligi_soni*2+(input.pralyot/6*input.pralyot_soni*(input.bino_uzunligi_soni+1))+Number((input.qoshimcha_pralyot!==0)?(input.qoshimcha_pralyot/6*2+Math.ceil(input.pralyot*input.pralyot_soni/input.qadam_q)*2 ):(0)) )
+            });
+            TABLE_1.push({
+                name: "13", 
+                value: (TABLE_1[TABLE_1.length-1].value*0.24)
+            });
+            TABLE_1.push({
+                name: "14", 
+                value: ((TABLE_1[1].value+TABLE_1[6].value)*0.6)
+            });
+            TABLE_1.push({
+                name: "15", 
+                value: ((TABLE_1[1].value+TABLE_1[6].value)*0.8)
+            });
+            TABLE_1.push({
+                name: "16", 
+                value: (input.bino_uzunligi/input.qadam_a*input.bino_uzunligi_soni*input.pralyot_soni*2+Number((input.qoshimcha_pralyot!==0)?(Math.ceil(input.pralyot*input.pralyot_soni/input.qadam_q)*2):(0)))
+            });
+            TABLE_1.push({
+                name: "17", 
+                value: (TABLE_1[TABLE_1.length-1].value*0.36)
+            });
+            TABLE_1.push({
+                name: "18", 
+                value: (TABLE_1[TABLE_1.length-2].value)
+            });
+            TABLE_1.push({
+                name: "19", 
+                value: ( input.bino_uzunligi/input.qadam_a*input.bino_uzunligi_soni*(input.pralyot_soni+1)+ Number( (input.qoshimcha_pralyot!==0)?(Math.ceil(input.pralyot*input.pralyot_soni/input.qadam_q)*2):(0) ))
+            });
+            TABLE_1.push({
+                name: "20", 
+                value: (TABLE_1[TABLE_1.length-1].value*0.28)
+            });
+            TABLE_1.push({
+                name: "21", 
+                value: (TABLE_1[TABLE_1.length-2].value)
+            });
+            TABLE_1.push({
+                name: "22", 
+                value: (input.pralyot_soni*input.bino_uzunligi_soni*(input.bino_uzunligi/input.qadam_a+1))
+            });
+            TABLE_1.push({
+                name: "23", 
+                value: ((input.qoshimcha_pralyot!==0)?( Math.ceil(input.pralyot*input.pralyot_soni/input.qadam_q)+1 ):(0))
+            });
+            TABLE_1.push({
+                name: "24", 
+                value: ((TABLE_1[TABLE_1.length-1].value+TABLE_1[TABLE_1.length-2].value)*0.42)
+            });
+            TABLE_1.push({
+                name: "25", 
+                value: ( (input.pralyot*input.pralyot_soni*input.bino_uzunligi*input.bino_uzunligi_soni)/(3*input.qadam_a)+Number((input.qoshimcha_pralyot!==0)?(input.qoshimcha_pralyot/3*Math.ceil(input.pralyot*input.pralyot_soni/input.qadam_q) ):(0)) )
+            });
+            TABLE_1.push({
+                name: "26", 
+                value: (TABLE_1[TABLE_1.length-1].value*0.36)
+            });
+            TABLE_1.push({
+                name: "27", 
+                value: (TABLE_1[TABLE_1.length-2].value*(3+input.qadam_a))
+            });
+            TABLE_1.push({
+                name: "28", 
+                value: (N_panel.devor*input.bino_uzunligi_soni*2*input.bino_uzunligi/6+N_panel.umu*input.pralyot/6*input.pralyot_soni*(input.bino_uzunligi_soni+1))
+            });
+            TABLE_1.push({
+                name: "29", 
+                value: (TABLE_1[TABLE_1.length-1].value*0.24)
+            });
+            TABLE_1.push({
+                name: "30", 
+                value: (TABLE_1[TABLE_1.length-2].value*1.8)
+            });
+            TABLE_1.push({
+                name: "31", 
+                value: (N_panel.deraza*input.bino_uzunligi_soni*2*input.bino_uzunligi/6)
+            });
+            TABLE_1.push({
+                name: "32", 
+                value: (TABLE_1[TABLE_1.length-1].value*0.24)
+            });
+            TABLE_1.push({
+                name: "33", 
+                value: ((input.pralyot*input.pralyot_soni*input.bino_uzunligi*input.bino_uzunligi_soni))
+            });
+            TABLE_1.push({
+                name: "34", 
+                value: ((input.pralyot*input.pralyot_soni*input.bino_uzunligi*input.bino_uzunligi_soni))
+            });
+            TABLE_1.push({
+                name: "35", 
+                value: ((input.pralyot*input.pralyot_soni*input.bino_uzunligi*input.bino_uzunligi_soni))
+            });
+            TABLE_1.push({
+                name: "36", 
+                value: ((input.pralyot*input.pralyot_soni*input.bino_uzunligi*input.bino_uzunligi_soni)/(3*input.qadam_a)*(3+input.qadam_a))
+            });
+            TABLE_1.push({
+                name: "37", 
+                value: (TABLE_1[27].value*(6+1.2))
+            });
+            TABLE_1.push({
+                name: "38", 
+                value: ((input.pralyot*input.pralyot_soni*input.bino_uzunligi*input.bino_uzunligi_soni))
+            });
+            TABLE_1.push({
+                name: "39", 
+                value: (TABLE_1[27].value*(6*1.2))
+            });
+            TABLE_1.push({
+                name: "40", 
+                value: (TABLE_1[27].value*(6*1.2))
+            });
+            TABLE_1.push({
+                name: "41", 
+                value: (TABLE_1[30].value*(6+1.2)*2*2*0.18)
+            });
+            TABLE_1.push({
+                name: "42", 
+                value: (TABLE_1[30].value*(6+1.2)*0.82*2)
+            });
+            TABLE_1.push({
+                name: "43", 
+                value: ((input.bino_uzunligi*input.bino_uzunligi_soni+Number((input.qoshimcha_pralyot!==0)?(input.qoshimcha_pralyot):(0))+input.pralyot*input.pralyot_soni)*2*1.5)
+            });
+            TABLE_1.push({
+                name: "44", 
+                value: ((input.bino_uzunligi*input.bino_uzunligi_soni+Number((input.qoshimcha_pralyot!==0)?(input.qoshimcha_pralyot):(0))+input.pralyot*input.pralyot_soni)*2*1.5)
+            });
+            TABLE_1.push({
+                name: "45", 
+                value: ((input.pralyot*input.pralyot_soni*input.bino_uzunligi*input.bino_uzunligi_soni))
+            });
+            TABLE_1.push({
+                name: "46", 
+                value: ((input.pralyot*input.pralyot_soni*input.bino_uzunligi*input.bino_uzunligi_soni))
+            });
+            TABLE_1.push({
+                name: "47", 
+                value: ((input.pralyot*input.pralyot_soni*input.bino_uzunligi*input.bino_uzunligi_soni)*0.3)
+            });
+            TABLE_1.push({
+                name: "48", 
+                value: ((input.pralyot*input.pralyot_soni*input.bino_uzunligi*input.bino_uzunligi_soni)*0.7)
+            });
+            TABLE_1.forEach(element => {
+                TABLE1[Number(element.name)].value = element.value;
+            });
+            /////
+            /*TABLE_1.push({
+                name: "0", 
+                value: (0)
+            });*/
+        }
+        //
+        function CAL_TABLE2() {
+            TABLE2 = []
+            TABLE2.push(null);
+            for (let i = 1; i <= jadval_2.length-1; i++) {
+                TABLE2.push([]);
+                for (let j = 1; j <= (jadval_2[i].length); j++) {
+                    TABLE2[i].push(0);
+                }
+            }
+            TABLE2[1][0] = TABLE1[6].value; 
+            TABLE2[2][0] = TABLE1[12].value; 
+            TABLE2[3][0] = TABLE1[6].value; 
+            TABLE2[4][0] = TABLE1[16].value; 
+            TABLE2[5][0] = TABLE1[19].value; 
+            TABLE2[6][0] = TABLE1[22].value+TABLE1[23].value; 
+            TABLE2[7][0] = TABLE1[25].value; 
+            TABLE2[8][0] = TABLE1[28].value; 
+            TABLE2[9][0] = TABLE1[35].value; 
+            TABLE2[10][0] = TABLE1[31].value; 
+            TABLE2[11][0] = TABLE1[31].value; 
+            TABLE2[12][0] = TABLE1[47].value; 
+            TABLE2[13][0] = TABLE1[48].value; 
+            for (let i = 1; i <= 13; i++) {
+                for (let j = 1; j <= (TABLE2[i].length-1); j++) {
+                    TABLE2[i][j] = TABLE2[i][0]*(jadval_2[i][j].int);
+                }
+            }
+        }
+        //
+        DrawTables();
+        function DrawTables() {
+            TABLE1.forEach(element => {
+                element.value = Math.round((element.value)*1000)/1000;
+            });
+            answers.innerHTML = ``;
+            let strs = "";
+            for (let tab = 1; tab <= 2; tab++) {
+                if (tab === 1) {
+                    strs += `
+                    <div class="table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>№</th>
+                                    <th>Ishlarning nomi</th>
+                                    <th>Ish hajmi</th>
+                                </tr>
+                            </thead>
+                            <tbody>`;
+                    for (let i = 1; i <= TABLE1.length-1; i++) {
+                        strs += `
+                                <tr>
+                                    <td class="td_num">${i}</td>
+                                    <td class="td_nam">${jadval_1[i]}</td>
+                                    <td class="td_val">${TABLE1[i].value}</td>
+                                </tr>`
+                    }
+                    strs += `
+                            </tbody>
+                        </table>
+                    </div>`;
+                } else if (tab === 2) {
+                    strs += `
+                    <div class="table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>№</th>
+                                    <th>Ishlarning nomi</th>
+                                    <th>Ishning hajmi</th>
+                                    <th>Material nomi</th>
+                                    <th>Materialning normativi</th>
+                                    <th>Materialning umumiy hajmi</th>
+                                </tr>
+                            </thead>
+                            <tbody>`;
+                    for (let i = 1; i <= TABLE2.length-1; i++) {
+                        strs += `
+                                <!-- Row 1: Ishning nomi va umumiy qatorlar -->
+                                <tr>
+                                    <td class="td_num" rowspan="${TABLE2[i].length-1}">${i}</td>
+                                    <td class="td_name" rowspan="${TABLE2[i].length-1}">${jadval_2[i][0].name}</td>
+                                    <td class="td_value" rowspan="${TABLE2[i].length-1}">${ Math.round(TABLE2[i][0]*1000)/1000 }</td>`;
+                                 
+                        for (let j = 1; j <= TABLE2[i].length-1; j++) {
+                            if (j > 1) {
+                                strs += `<tr>`;
+                            }
+                            strs += `
+                                <td class="td_t">${jadval_2[i][j].str}</td>
+                                    <td class="td_k">${jadval_2[i][j].int}</td>
+                                    <td class="td_a">${ Math.round(TABLE2[i][j]*1000)/1000 }</td>
+                                </tr>`;
+                        }
+                    }
+                    strs += `
+                            </tbody>
+                        </table>
+                    </div>`;
+                }
+            }
+            answers.innerHTML = strs;
+        }
+    </script>
+</body>
+</html>
