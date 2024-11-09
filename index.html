@@ -5,9 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        *{
-            font-size: 12px;
+        @media (max-width: 500px) {
+            *{
+                font-size: 10px;
+            }
         }
+
+        @media (min-width: 501px) and (max-width: 720px) {
+            *{
+                font-size: 14px;
+            }
+        }
+        @media (min-width: 721px) and (max-width: 1800px) {
+            *{
+                font-size: 20px;
+            }
+        }
+
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -27,6 +41,11 @@
         ::-webkit-scrollbar-thumb:hover {
             background: rgb(112, 110, 110); 
         }
+        /* bold font */
+        .bold {
+            font-weight: bold;
+        }
+
         .body {
             position: absolute;
             inset: 0;
@@ -51,13 +70,9 @@
                 margin: calc(1vh*5) 0;
                 width: calc(1vw*80);
                 height: min-content;
-                border: solid 2px black;
+                border: solid 1px black;
                 box-shadow: 0 0 16px white;
             }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
         th, td {
             border: 1px solid black;
             padding: 8px;
@@ -94,15 +109,184 @@
             .td_a {
                 max-width: calc(1vw*1);
             }
+    /* Set widths for the first 4 columns */
+    th:nth-child(1) {
+        width: 30%;
+    }
+
+    /* "Tr" column width reduced to 5% */
+    th:nth-child(2) {
+        width: 8%;
+    }
+
+    /* Adjust last two columns to take 40% in total, now 20% each */
+    th:nth-child(3) {
+        width: 30%; /* Adjusting to 20% each */
+    }
+    
+    .vertikal-text {
+        writing-mode: vertical-rl;
+        transform: rotate(180deg);
+    }
+    .td_inp {
+        background-color: red;
+        height: calc(1vw*5);
+        width: max-content;
+    }
+    .inp_ent_ {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        background-color: rgba(99, 86, 86, 0.808);
+        height: calc(1vw*5);
+        width: calc(1vw*16);
+        
+        -webkit-appearance: none; /* Safari va Chrome uchun */
+        -moz-appearance: textfield; /* Firefox uchun */
+        appearance: none; 
+    }
+    .btn {
+        width: calc(1vw*40);
+        min-height: calc(1vh*10);
+        font-size: 24px;
+        border-radius: calc(1vw*2);
+        margin: calc(1vh*10) calc(1vw*10);
+    }
     </style>
 </head>
 <body>
     <div class="body">
         <div id="answers" class="main">
         </div>
+        <div id="enters" class="main">
+            <table>
+                <!-- Header row -->
+                <tr>
+                    <th colspan="2">Nomi</th>
+                    <th>Tr</th>
+                    <th colspan="2">Qiymat</th>
+                </tr>
+            
+                <!-- Data rows (19 rows in total) -->
+                <tr>
+                    <td colspan="2">Вариант №</td>
+                    <td>1</td>
+                    <td colspan="2"><input type="number" class="inp_ent_" id="inp_1_1" value="0"></td>
+                </tr>
+                <tr>
+                    <td rowspan="2" class="vertikal-text">Асосий (м)</td>
+                    <td>Асосий (м)</td>
+                    <td>2</td>
+                    <td colspan="2"><input type="number" class="inp_ent_" id="inp_2_1" value="0"></td>
+                </tr>
+                <tr>
+                    <td>Қўшимча (м)</td>
+                    <td>3</td>
+                    <td colspan="2"><input type="number" class="inp_ent_" id="inp_3_1" value="0"></td>
+                </tr>
+                <tr>
+                    <td colspan="2">Пролётлар сони (та)</td>
+                    <td>4</td>
+                    <td colspan="2"><input type="number" class="inp_ent_" id="inp_4_1" value="0"></td>
+                </tr>
+                <tr>
+                    <td colspan="2">Бино узунлиги (м)</td>
+                    <td>5</td>
+                    <td><input type="number" class="inp_ent_" id="inp_5_1" value="0"></td>
+                    <td><input type="number" class="inp_ent_" id="inp_5_2" value="0"></td>
+                </tr>
+                <tr>
+                    <td colspan="2">Юк кута-рувчи элементгача бўлган баландлик (м)</td>
+                    <td>6</td>
+                    <td colspan="2"><input type="number" class="inp_ent_" id="inp_6_1" value="0"></td>
+                </tr>
+                <tr>
+                    <td colspan="2">Кран ости балкасигача бўлган баландлик (м)</td>
+                    <td>7</td>
+                    <td colspan="2"><input type="number" class="inp_ent_" id="inp_7_1" value="0"></td>
+                </tr>
+                <tr>
+                    <td rowspan="9" class="vertikal-text">Темирбетон конструкцияларнинг оғирлиги (тн)</td>
+                    <td>Пойдевор</td>
+                    <td>8</td>
+                    <td><input type="number" class="inp_ent_" id="inp_8_1" value="0"></td>
+                    <td><input type="number" class="inp_ent_" id="inp_8_2" value="0"></td>
+                </tr>
+                <tr>
+                    <td>Пойдевор балкаси</td>
+                    <td>9</td>
+                    <td><input type="number" class="inp_ent_" id="inp_9_1" value="0"></td>
+                    <td><input type="number" class="inp_ent_" id="inp_9_2" value="0"></td>
+                </tr>
+                <tr>
+                    <td>Фахверг устун</td>
+                    <td>10</td>
+                    <td><input type="number" class="inp_ent_" id="inp_10_1" value="0"></td>
+                    <td><input type="number" class="inp_ent_" id="inp_10_2" value="0"></td>
+                </tr>
+                <tr>
+                    <td>Четки катор устун</td>
+                    <td>11</td>
+                    <td><input type="number" class="inp_ent_" id="inp_11_1" value="0"></td>
+                    <td><input type="number" class="inp_ent_" id="inp_11_2" value="0"></td>
+                </tr>
+                <tr>
+                    <td>Ўрта катор устун</td>
+                    <td>12</td>
+                    <td><input type="number" class="inp_ent_" id="inp_12_1" value="0"></td>
+                    <td><input type="number" class="inp_ent_" id="inp_12_2" value="0"></td>
+                </tr>
+                <tr>
+                    <td>Ферма ёки балка</td>
+                    <td>13</td>
+                    <td><input type="number" class="inp_ent_" id="inp_13_1" value="0"></td>
+                    <td><input type="number" class="inp_ent_" id="inp_13_2" value="0"></td>
+                </tr>
+                <tr>
+                    <td>Кран ости балкаси</td>
+                    <td>14</td>
+                    <td><input type="number" class="inp_ent_" id="inp_14_1" value="0"></td>
+                    <td><input type="number" class="inp_ent_" id="inp_14_2" value="0"></td>
+                </tr>
+                <tr>
+                    <td>Том ёпма плитаси</td>
+                    <td>15</td>
+                    <td><input type="number" class="inp_ent_" id="inp_15_1" value="0"></td>
+                    <td><input type="number" class="inp_ent_" id="inp_15_2" value="0"></td>
+                </tr>
+                <tr>
+                    <td>Девор панели</td>
+                    <td>16</td>
+                    <td><input type="number" class="inp_ent_" id="inp_16_1" value="0"></td>
+                    <td><input type="number" class="inp_ent_" id="inp_16_2" value="0"></td>
+                </tr>
+                <tr>
+                    <td rowspan="2" colspan="2">Устун тури</td>
+                    <td>17</td>
+                    <td><input type="number" class="inp_ent_" id="inp_17_1" value="0"></td>
+                    <td><input type="number" class="inp_ent_" id="inp_17_2" value="0"></td>
+                </tr>
+                <tr>
+                    <td>18</td>
+                    <td><input type="number" class="inp_ent_" id="inp_18_1" value="0"></td>
+                    <td><input type="number" class="inp_ent_" id="inp_18_2" value="0"></td>
+                </tr>
+                <tr>
+                    <td colspan="2">Том ёпиш тури</td>
+                    <td>19</td>
+                    <td><input type="number" class="inp_ent_" id="inp_19_1" value="0"></td>
+                    <td><input type="number" class="inp_ent_" id="inp_19_2" value="0"></td>
+                </tr>
+            </table>
+            <button class="btn" onclick="Calculate();"> 
+                Calculate
+            </button>
+        </div>
     </div>
     <script>
         const answers = document.getElementById("answers");
+        const enters = document.getElementById("enters");
         //
         let input = {
             pralyot: 18,
@@ -162,57 +346,57 @@
         }
         N_panel.umu = N_panel.deraza + N_panel.devor;
         const jadval_1 = [
-            null, 
-            "Buldozеr bilan o’simlik qatlamini kеsish va maydonni tеkislash", 
-            "Tеskari chumichli ekskovator yordamida poydеvor uchun xandak qazish (kovush xajmi 1,25 m3)", 
-            "Xandaq tubiga poydеvor o’rnatish uchun qo’lda qazib tеkislash (0,15 m)", 
-            "Xandakka shag’al asos tўshash (0,2 m)", 
-            "Poydеvor stakan ostiga 0,2 m qalinlikdagi bеton asos tўshash", 
-            "Og’irligi 2,6 tn poydеvor stakanlarini o’rnatish", 
-            "Poydеvor stakanlarini 2 marta bitum bilan izolyatsiyalash", 
-            "Og’ir’ligi 3,4 tn.li chеtki kator ustunlarni montaj qilish", 
-            "Og’irligi 4,2 tn.li o’rta qator ustunlarni montaj qilish", 
-            "Og’irligi 1,6 tn.li faxvеrk ustunlarini montaj qilish", 
-            "Ustun bilan poydеvor chokini bеtonlash", 
-            "Og’irligi 2,1 tn.li poydеvor balkalarini montaj qilish", 
-            "Poydеvor balkalar choklarini payvandlash", 
-            "Poydеvor balkalar choklarini bеtonlash", 
-            "Buldozеr bilan poydеvor yonini grunt bilan qayta to’ldirish (qayta ko’mish)", 
-            "Gruntni katok yordamida zichlash", 
-            "Og’irligi 3,8 tn.li kran osti balkalarini montaj qilish", 
-            "Kran osti balkalarining choklarini payvandlash", 
-            "Kran osti balka(to’sin)lari choklarini bеtonlash", 
-            "Og’irligi 3,8 tn.li 6 m.li balkalarini montaj qilish", 
-            "Balka osti balkasini montaj qilish", 
-            "Balka osti balkasini choklarini payvandlash", 
-            "Og’irligi 6,6 tn. li 12 m.li balkalarini montaj qilish", 
-            "Balkalari tutashmalarini payvandlash", 
-            "Balkalari tutashmalarini bеtonlash", 
-            "Dеvor panеllarini montaj qilish", 
-            "Dеvor panеllari choklarini payvandlash", 
-            "Dеvor panеllari choklarini bеtonlash", 
-            "Tom yopma (plita)lari montaj qilish", 
-            "Tom yopma (plita)lari choklarini payvandlash", 
-            "Tom yopma (plita)lari choklarini bеtonlash", 
-            "Tomga keramzet asos to’shash", 
-            "Tomga 50 mm qalinlikdagi bеton asos to’shash", 
-            "Tomga 3 qavatli rubеroid (qora qog’oz) to’shash", 
-            "Shiftdagi plita choklarini yamash", 
-            "Shiftni oxaklash", 
-            "Dеvorning ichki tomonini oxaklash", 
-            "Dеvorning tashqi fasadni oxaklash", 
-            "Mеtal dеraza romlarini montaj qilish (og’irligi 0,4 tn)", 
-            "12 dona mеtall darvozalarni ўrnatish (og’irligi 1,2 tn)", 
-            "Dеraza romlarini moyli bo’yoqda bo’yash", 
-            "Dеraza romlariga 2 qavatli oyna solish", 
-            "Darvozani moyli bo’yoqda bo’yash", 
-            "Bino ichini pol uchun tеkislash", 
-            "Polga shag’al asos to’shash", 
-            "70% betonli pol qilish", 
-            "30% asfalt betonli pol qilish", 
-            "Bino atrofiga otmostka uchun shag’al asos tayyorlash (0,15 m)", 
-            "Bino atrofini sement qorishma bilan betonlash (otmostka)"
+            null,
+            "Buldozer bilan o’simlik qatlamini kesish va maydonni tekislash",
+            "Tuproqni teskari chumichli ekskavator yordamida qazish (kovush hajmi 1,25 m³)",
+            "Tuproqni qo'lda qazish (0,15-0,2 sm)",
+            "Handakka shag'al asos to'shash (200 mm, 6 m²)",
+            "Handakni beton asos tayyorlash",
+            "Katlovanga 3.6 T og'irlikda poydevor o'rnatish",
+            "Poydevorni bitum yordamida izolatsiyalash",
+            "8,8 tonna og'irlikdagi chetki qator ustunlarini montaj qilish",
+            "10,0 tonna og'irlikdagi o'rta qator ustunlarini montaj qilish",
+            "5,6 tonna og'irlikdagi fahverk ustunlarini montaj qilish",
+            "Poydevor bilan ustun chokini betonlash",
+            "Og'irligi 3.1 tonnagacha bo'lgan poydevor balkasini montaj qilish",
+            "Poydevor balkasini ustunlarga elektr payvandlash",
+            "Tuproqni qayta ko'mish",
+            "Tuproqni katok yordamida zichlash (Qo'lda yoki buldozorda)",
+            "4,2 tonnagacha bo'lgan kran osti balkasini montaj qilish",
+            "Kran osti balkasini ustunlarga elektr payvandlash",
+            "Kran osti balkasini chokini betonlash",
+            "4,1 tonnagacha bo'lgan stropila osti fermasini montaj qilish",
+            "Stropila osti fermasini elektr payvandlash",
+            "Stropila osti fermasini chokini betonlash",
+            "Uzunligi 24 metr, og'irligi 9,6 t gacha bo'lgan stropila fermasini montaj qilish",
+            "Uzunligi 18 metr, og'irligi ... t gacha bo'lgan stropila fermasini montaj qilish",
+            "Stropila fermasini ustunlarga elektr payvandlash",
+            "Yuzasi 18 m² gacha, og'irligi 2,4 tonnagacha bo'lgan tom yopma plitalarini montaj qilish",
+            "Tom yopma plitalarini elektr payvandlash",
+            "Tom yopma plitalarini chokini betonlash (0,4)",
+            "Yuzasi 9 m² gacha bo'lgan devor panelini montaj qilish",
+            "Devor panelini elektr payvandlash",
+            "Devor panelini chokini betonlash",
+            "Og'irligi 0,4 tonna bo'lgan metal deraza romlarini o'rnatish",
+            "Deraza romlarini elektr payvandlash",
+            "Tomga 0.12 m qalinlikdagi keramzit to'shash",
+            "Tomga qalinligi 50 mm gacha bo'lgan sement asos to'shash",
+            "Tomga 3 qavatli ruberoid (qora qog'oz) to'shash",
+            "Shiftdagi plita choklarini yamash",
+            "Ichki devorlar choklarini rastvor yordamida betonlash",
+            "Shiftni ohak yordamida bo'yash",
+            "Devorlarni ohak yordamida bo'yash",
+            "Tashqi devorlarni ohaklash",
+            "Deraza romlarini moyli bo'yoqda bo'yash",
+            "Deraza romlariga 2 qavatli oyna solish",
+            "Bino atrofini atmoska uchun shag'al asos tayyorlash (0,15 m)",
+            "Bino atrofini sement qorishma bilan betonlash (atmoska)",
+            "Bino ichini pol qilish uchun tekislash",
+            "Polga shag'al asos to'shash",
+            "Bino ichining 30% ini asfaltli pol qilish",
+            "Bino ichining 70% ini betonli pol qilish"
         ];
+
 
         const jadval_2 = [
             null,  // 0-qatorni tashlab ketish
@@ -336,13 +520,17 @@
 
         //
         //
+        //Calculate()
         //
-        TABLE_1 = [];
-        CAL_TABLE1();
-        console.table(TABLE1)
-        CAL_TABLE2();
-        console.table(TABLE2)
-        
+        function Calculate() {
+            enters.innerHTML = "";
+            enters.style = `z-index: -5;`;
+            CAL_TABLE1();
+            console.table(TABLE1)
+            CAL_TABLE2();
+            console.table(TABLE2)
+            DrawTables();
+
         /*input = input_2;        
         TABLE_1 = [];
         CAL_TABLE1();
@@ -352,10 +540,12 @@
         TABLE_1 = [];
         CAL_TABLE1();
         console.table(TABLE_1)*/
+        }
         //
         //
         //
         function CAL_TABLE1() {
+            TABLE_1 = [];
             TABLE_1.push({
                 name:"1", 
                 value:(input.pralyot*input.pralyot_soni+60)*(input.bino_uzunligi*input.bino_uzunligi_soni+input.qoshimcha_pralyot+60)
@@ -560,7 +750,7 @@
         }
         //
         function CAL_TABLE2() {
-            TABLE2 = []
+            TABLE2 = [];
             TABLE2.push(null);
             for (let i = 1; i <= jadval_2.length-1; i++) {
                 TABLE2.push([]);
@@ -588,7 +778,6 @@
             }
         }
         //
-        DrawTables();
         function DrawTables() {
             TABLE1.forEach(element => {
                 element.value = Math.round((element.value)*1000)/1000;
@@ -613,7 +802,7 @@
                                 <tr>
                                     <td class="td_num">${i}</td>
                                     <td class="td_nam">${jadval_1[i]}</td>
-                                    <td class="td_val">${TABLE1[i].value}</td>
+                                    <td class="td_val bold">${TABLE1[i].value}</td>
                                 </tr>`
                     }
                     strs += `
@@ -630,8 +819,8 @@
                                     <th>Ishlarning nomi</th>
                                     <th>Ishning hajmi</th>
                                     <th>Material nomi</th>
-                                    <th>Materialning normativi</th>
-                                    <th>Materialning umumiy hajmi</th>
+                                    <th>Material- ning normativi</th>
+                                    <th>Material- ning umumiy hajmi</th>
                                 </tr>
                             </thead>
                             <tbody>`;
@@ -641,7 +830,7 @@
                                 <tr>
                                     <td class="td_num" rowspan="${TABLE2[i].length-1}">${i}</td>
                                     <td class="td_name" rowspan="${TABLE2[i].length-1}">${jadval_2[i][0].name}</td>
-                                    <td class="td_value" rowspan="${TABLE2[i].length-1}">${ Math.round(TABLE2[i][0]*1000)/1000 }</td>`;
+                                    <td class="td_value bold" rowspan="${TABLE2[i].length-1}">${ Math.round(TABLE2[i][0]*1000)/1000 }</td>`;
                                  
                         for (let j = 1; j <= TABLE2[i].length-1; j++) {
                             if (j > 1) {
@@ -650,7 +839,7 @@
                             strs += `
                                 <td class="td_t">${jadval_2[i][j].str}</td>
                                     <td class="td_k">${jadval_2[i][j].int}</td>
-                                    <td class="td_a">${ Math.round(TABLE2[i][j]*1000)/1000 }</td>
+                                    <td class="td_a bold">${ Math.round(TABLE2[i][j]*1000)/1000 }</td>
                                 </tr>`;
                         }
                     }
