@@ -65,6 +65,7 @@
                 width: calc(1vw*100);
                 height: calc(1vh*100);
                 overflow-y: auto;
+                padding-top: calc(1vh*10);
             }
             .table {
                 margin: calc(1vh*5) 0;
@@ -200,10 +201,32 @@
             {
                 background-color: white;
             }
+    .brend {
+        cursor: pointer;
+        position: fixed;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: calc(1vw*24);
+        height: calc(1vh*4);
+        background-color: rgb(42, 43, 42);
+        color: white;
+        z-index: 7;
+        left: calc(1vw*1);
+        top: calc(1vh*1);
+        border-radius: calc(1vw*2);
+        box-shadow:
+            0 0 calc(1vw*30/6) green,
+            0 0 calc(1vw*28/6) green,
+            0 0 calc(1vw*26/6) green,
+            0 0 calc(1vw*24/6) green;
+    }
     </style>
 </head>
 <body>
     <div class="body">
+        <div class="brend" onclick="window.open('https://t.me/Akroyit_user', '_blank');">AKROYIT_user</div>
         <div class="security" id="security">
             <p class="sec_e">Enter Password</p>
             <input placeholder="Password" id="security_password" class="sec_e" type="text">
