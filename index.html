@@ -141,7 +141,7 @@
         background-color: rgba(99, 86, 86, 0.808);
         height: calc(1vw*5);
         width: calc(1vw*16);
-        
+
         -webkit-appearance: none; /* Safari va Chrome uchun */
         -moz-appearance: textfield; /* Firefox uchun */
         appearance: none; 
@@ -153,10 +153,52 @@
         border-radius: calc(1vw*2);
         margin: calc(1vh*10) calc(1vw*10);
     }
+    .security {
+        position: fixed;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: calc(1vw*80);
+        height: calc(1vh*80);
+        background-color: rgb(255, 73, 73);
+        z-index: 7;
+        border-radius: calc(1vw*5);
+        box-shadow: 0 0 calc(1vw*40) red,
+            0 0 calc(1vw*38) red,
+            0 0 calc(1vw*36) red,
+            0 0 calc(1vw*34) red,
+            0 0 calc(1vw*32) red,
+            0 0 calc(1vw*30) red,
+            0 0 calc(1vw*28) red,
+            0 0 calc(1vw*26) red,
+            0 0 calc(1vw*24) red;
+    }
+        .sec_e {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: calc(1vw*54);
+            height: calc(1vh*5);
+            text-align: center;
+            font-size: 18px;
+            padding: 0;
+            border-radius: calc(1vw*2);
+            border: none;
+            background-color: white;
+            box-shadow: 0 0 22px white;
+            margin: calc(1vw*4);
+        }
+         
     </style>
 </head>
 <body>
     <div class="body">
+        <div class="security" id="security">
+            <p class="sec_e">Enter Password</p>
+            <input placeholder="Password" id="security_password" class="sec_e" type="text">
+            <button class="sec_e" onclick="CheckSecurity();">Check</button>
+        </div>
         <div id="answers" class="main">
         </div>
         <div id="enters" class="main">
@@ -175,7 +217,7 @@
                     <td colspan="2"><input type="number" class="inp_ent_" id="inp_1_1" value="0"></td>
                 </tr>
                 <tr>
-                    <td rowspan="2" class="vertikal-text">Асосий (м)</td>
+                    <td rowspan="2" class="vertikal-text">Пролёт-лар</td>
                     <td>Асосий (м)</td>
                     <td>2</td>
                     <td colspan="2"><input type="number" class="inp_ent_" id="inp_2_1" value="0"></td>
@@ -287,6 +329,7 @@
     <script>
         const answers = document.getElementById("answers");
         const enters = document.getElementById("enters");
+        const security = document.getElementById("security");
         //
         let input = {
             pralyot: 18,
@@ -521,6 +564,18 @@
         //
         //
         //Calculate()
+        //
+        CheckSecurity();
+
+        function CheckSecurity() {
+            if (document.getElementById("security_password").value === "tls123" || 
+                ( JSON.parse(localStorage.getItem("security_qtel")) === true) ) {
+                security.style = `z-index: -2;`;
+                localStorage.setItem("security_qtel", JSON.stringify(true))
+            } else {
+                alert("Wrong password")
+            }
+        }
         //
         function Calculate() {
             enters.innerHTML = "";
