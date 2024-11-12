@@ -363,7 +363,7 @@
         const security = document.getElementById("security");
         //
         let input = {
-            variant: 0,
+            variant: 2,
             pralyot: 18,
             qoshimcha_pralyot: 0,
             pralyot_soni: 3,
@@ -373,8 +373,19 @@
             qadam_q: 0,
             bino_balandligi: 8.4
         };
+
+        document.getElementById("inp_1_1").value = input.variant;
+        document.getElementById("inp_2_1").value = input.pralyot;
+        document.getElementById("inp_3_1").value = input.qoshimcha_pralyot;
+        document.getElementById("inp_4_1").value = input.pralyot_soni;
+        document.getElementById("inp_5_1").value = input.bino_uzunligi;
+        document.getElementById("inp_5_2").value = input.bino_uzunligi_soni;
+        document.getElementById("inp_6_1").value = input.bino_balandligi;
+        document.getElementById("inp_17_1").value = input.qadam_a;
+        document.getElementById("inp_18_1").value = input.qadam_q;
+
         //
-        let input_2 = {
+        /*let input_2 = {
             pralyot: 18,
             qoshimcha_pralyot: 18,
             pralyot_soni: 3,
@@ -392,7 +403,7 @@
             bino_uzunligi_soni: 3,
             qadam_a: 6,
             qadam_q: 6
-        };
+        };*/
         //
         let dates = {
             bino_tozalashga_qoshimcha: 60,
